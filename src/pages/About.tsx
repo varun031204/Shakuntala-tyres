@@ -27,10 +27,10 @@ const About: React.FC = () => {
   ];
 
   const stats = [
-    { number: '10,000+', label: 'Happy Customers', icon: Users },
+    { number: '500+', label: 'Happy Customers', icon: Users },
     { number: '4.5', label: 'Star Rating', icon: Star },
-    { number: '5+', label: 'Years Experience', icon: Clock },
-    { number: '50+', label: 'Tyre Models', icon: Shield }
+    { number: '15+', label: 'Years Experience', icon: Clock },
+    { number: '100+', label: 'Tyre Models', icon: Shield }
   ];
 
   const values = [
@@ -131,18 +131,19 @@ const About: React.FC = () => {
               </h2>
               <div className="space-y-6 text-gray-600 text-lg">
                 <p>
-                  At Shakuntala Tyres, we pride ourselves on being the most trusted and 
-                  renowned tyre shop in the city. Conveniently located near Maharana Pratap Chowk, 
-                  we have been serving our community with high-quality tyres and exceptional service for years.
+                  Shakuntala Tyres, located at Jhanda Chowk, opposite Electric Office (near Maharana Pratap Chowk), 
+                  Jhumri Telaiya, is a trusted tyre dealer with over a decade of service. We have built our reputation 
+                  on quality products, expert consultation, and affordable pricing.
                 </p>
                 <p>
-                  Your safety and comfort depend on the quality of your tyres. That's why we only 
-                  offer products that meet the highest standards of durability and performance. 
-                  Our team is dedicated to providing personalized service to ensure every customer leaves satisfied.
+                  We specialize in tyres for all types of vehicles - cars, motorcycles, trucks, and commercial vehicles. 
+                  Our extensive inventory includes top brands like Apollo, Bridgestone, CEAT, JK Tyre, and MRF. 
+                  From budget-friendly options to premium performance tyres, we have something for every need and budget.
                 </p>
                 <p>
-                  Whether you're looking for new tyres or expert advice on tyre maintenance, 
-                  we are your one-stop solution. Let us help you drive with confidence!
+                  Our services include tyre installation, wheel balancing, alignment, puncture repair, 
+                  and expert consultation. With our experienced team and modern equipment, we ensure 
+                  your vehicle gets the best care possible. Visit us for genuine products, competitive prices, and reliable service.
                 </p>
               </div>
             </motion.div>

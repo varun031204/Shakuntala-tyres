@@ -124,7 +124,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
             >
               {tyre.image && (
                 <img
-                  src={`http://localhost:5000${tyre.image}`}
+                  src={tyre.image}
                   alt={tyre.name}
                   className="w-full h-48 object-cover"
                 />

@@ -1,5 +1,4 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
 const router = express.Router();
 
@@ -13,13 +12,7 @@ router.post('/login', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
     
-    const token = jwt.sign(
-      { id: admin._id, username: admin.username },
-      process.env.JWT_SECRET || 'fallback-secret',
-      { expiresIn: '24h' }
-    );
-    
-    res.json({ token, admin: { id: admin._id, username: admin.username } });
+    res.json({ success: true, admin: { id: admin._id, username: admin.username } });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

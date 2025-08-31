@@ -1,21 +1,12 @@
 const express = require('express');
 const multer = require('multer');
-const path = require('path');
+const cloudinary = require('../config/cloudinary');
 const Tyre = require('../models/Tyre');
 const router = express.Router();
 
-// Multer config for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/');
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + Math.round(Math.random() * 1E9) + path.extname(file.originalname));
-  }
-});
-
+// Multer config for memory storage (Cloudinary upload)
 const upload = multer({ 
-  storage,
+  storage: multer.memoryStorage(),
   fileFilter: (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -25,6 +16,22 @@ const upload = multer({
   },
   limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
 });
+
+// Upload image to Cloudinary
+const uploadToCloudinary = (buffer) => {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload_stream(
+      { 
+        folder: 'shakuntala-tyres',
+        resource_type: 'image'
+      },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result.secure_url);
+      }
+    ).end(buffer);
+  });
+};
 
 // Get all tyres
 router.get('/', async (req, res) => {
@@ -55,9 +62,15 @@ router.get('/:id', async (req, res) => {
 // Create new tyre
 router.post('/', upload.single('image'), async (req, res) => {
   try {
+    let imageUrl = null;
+    
+    if (req.file) {
+      imageUrl = await uploadToCloudinary(req.file.buffer);
+    }
+    
     const tyreData = {
       ...req.body,
-      image: req.file ? `/uploads/${req.file.filename}` : null
+      image: imageUrl
     };
     
     const tyre = new Tyre(tyreData);
@@ -72,8 +85,9 @@ router.post('/', upload.single('image'), async (req, res) => {
 router.put('/:id', upload.single('image'), async (req, res) => {
   try {
     const updateData = { ...req.body };
+    
     if (req.file) {
-      updateData.image = `/uploads/${req.file.filename}`;
+      updateData.image = await uploadToCloudinary(req.file.buffer);
     }
     
     const tyre = await Tyre.findByIdAndUpdate(req.params.id, updateData, { new: true });

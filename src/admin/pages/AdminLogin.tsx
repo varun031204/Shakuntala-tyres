@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Lock, User, Eye, EyeOff } from 'lucide-react';
 
 interface AdminLoginProps {
-  onLogin: (token: string) => void;
+  onLogin: () => void;
 }
 
 const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
@@ -26,9 +26,9 @@ const AdminLogin: React.FC<AdminLoginProps> = ({ onLogin }) => {
 
       const data = await response.json();
       
-      if (response.ok) {
-        localStorage.setItem('adminToken', data.token);
-        onLogin(data.token);
+      if (response.ok && data.success) {
+        localStorage.setItem('adminLoggedIn', 'true');
+        onLogin();
       } else {
         setError(data.message);
       }

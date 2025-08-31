@@ -51,7 +51,7 @@ const Prices: React.FC = () => {
 
   const fetchTyres = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/tyres');
+      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/tyres`);
       const data = await response.json();
       setTyres(data);
     } catch (error) {
@@ -91,9 +91,7 @@ const Prices: React.FC = () => {
     }
   };
 
-  const handleBuy = (tyre: Tyre) => {
-    alert(`Purchase request for ${tyre.name} - ₹${tyre.price}\n(Feature coming soon!)`);
-  };
+
 
   if (loading) {
     return <LoadingSpinner />;
@@ -206,7 +204,7 @@ const Prices: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <TyreCard tyre={tyre} onBuy={handleBuy} />
+                <TyreCard tyre={tyre} />
               </motion.div>
             ))}
           </motion.div>

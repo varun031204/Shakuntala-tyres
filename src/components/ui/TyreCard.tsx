@@ -5,10 +5,9 @@ import { Tyre } from '../../types';
 
 interface TyreCardProps {
   tyre: Tyre;
-  onBuy: (tyre: Tyre) => void;
 }
 
-const TyreCard: React.FC<TyreCardProps> = ({ tyre, onBuy }) => {
+const TyreCard: React.FC<TyreCardProps> = ({ tyre }) => {
   const isLowStock = tyre.stock <= 3;
   const isOutOfStock = tyre.stock === 0;
 
@@ -23,7 +22,7 @@ const TyreCard: React.FC<TyreCardProps> = ({ tyre, onBuy }) => {
       {tyre.image && (
         <div className="h-32 sm:h-40 md:h-48 bg-gray-100 overflow-hidden">
           <img
-            src={`http://localhost:5000${tyre.image}`}
+            src={tyre.image}
             alt={tyre.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             onError={(e) => {
@@ -80,35 +79,21 @@ const TyreCard: React.FC<TyreCardProps> = ({ tyre, onBuy }) => {
           </span>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3">
-          <motion.button
-            whileHover={{ scale: isOutOfStock ? 1 : 1.02 }}
-            whileTap={{ scale: isOutOfStock ? 1 : 0.98 }}
-            onClick={() => !isOutOfStock && onBuy(tyre)}
-            disabled={isOutOfStock}
-            className={`flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-300 text-sm sm:text-base ${
-              isOutOfStock
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'btn-primary'
-            }`}
-          >
-            <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="hidden sm:inline">{isOutOfStock ? 'Out of Stock' : 'Buy Now'}</span>
-            <span className="sm:hidden">{isOutOfStock ? 'N/A' : 'Buy'}</span>
-          </motion.button>
-          
-          <motion.a
-            href="tel:+919876543210"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="flex-1 py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-300 bg-green-600 hover:bg-green-700 text-white text-sm sm:text-base"
-          >
-            <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="hidden sm:inline">Send Enquiry</span>
-            <span className="sm:hidden">Call</span>
-          </motion.a>
-        </div>
+        {/* Action Button */}
+        <motion.a
+          href="tel:+918298946081"
+          whileHover={{ scale: isOutOfStock ? 1 : 1.02 }}
+          whileTap={{ scale: isOutOfStock ? 1 : 0.98 }}
+          className={`w-full py-2.5 sm:py-3 px-3 sm:px-4 rounded-lg sm:rounded-xl font-semibold flex items-center justify-center space-x-1 sm:space-x-2 transition-all duration-300 text-sm sm:text-base ${
+            isOutOfStock
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed pointer-events-none'
+              : 'btn-primary'
+          }`}
+        >
+          <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
+          <span className="hidden sm:inline">{isOutOfStock ? 'Out of Stock' : 'Buy Now'}</span>
+          <span className="sm:hidden">{isOutOfStock ? 'N/A' : 'Buy'}</span>
+        </motion.a>
       </div>
     </motion.div>
   );

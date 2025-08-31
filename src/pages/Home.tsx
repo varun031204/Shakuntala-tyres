@@ -1,9 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, Users, Award, TrendingUp } from 'lucide-react';
+import { ArrowRight, Shield, Zap, Users, Award, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { tyreAPI } from '../utils/api';
+import { Tyre } from '../types';
 
 const Home: React.FC = () => {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [tyres, setTyres] = useState<Tyre[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTyres = async () => {
+      try {
+        const data = await tyreAPI.getAllTyres();
+        setTyres(data.slice(0, 8)); // Show first 8 tyres
+      } catch (error) {
+        console.error('Failed to fetch tyres:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTyres();
+  }, []);
+
+  const nextSlide = () => {
+    setIsPlaying(false);
+    setCurrentIndex((prev) => (prev + 1) % tyres.length);
+  };
+
+  const prevSlide = () => {
+    setIsPlaying(false);
+    setCurrentIndex((prev) => (prev - 1 + tyres.length) % tyres.length);
+  };
+
+  const handleTouch = () => {
+    setIsPlaying(false);
+  };
+
   const brands = [
     { name: 'Apollo', color: 'bg-purple-600', path: '/prices?brand=apollo' },
     { name: 'Bridgestone', color: 'bg-red-600', path: '/prices?brand=bridgestone' },
@@ -182,9 +217,24 @@ const Home: React.FC = () => {
                 Shakuntala Tyres
               </motion.span>
             </motion.h1>
-            <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-              Your trusted partner for premium tyres and exceptional service. 
-              Drive with confidence on every journey.
+            <motion.p 
+              className="text-2xl md:text-3xl font-semibold text-primary-200 mb-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+            >
+              Your Trusted Tyre Partner in Jhumri Telaiya
+            </motion.p>
+            <motion.p 
+              className="text-lg md:text-xl text-yellow-300 font-medium mb-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              "Quality Tyres, Expert Service, Affordable Pricing."
+            </motion.p>
+            <p className="text-lg md:text-xl text-gray-300 mb-8 max-w-4xl mx-auto">
+              At Shakuntala Tyres, we provide a wide range of tyres for motorcycles, scooters, and cars, ensuring safety and performance for every journey.
             </p>
             <motion.div 
               className="flex flex-col sm:flex-row gap-4 justify-center"
@@ -219,10 +269,10 @@ const Home: React.FC = () => {
             className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 mt-12 sm:mt-16"
           >
             {[
-              { number: '10K+', label: 'Happy Customers' },
-              { number: '5+', label: 'Years Experience' },
-              { number: '50+', label: 'Tyre Models' },
-              { number: '4.5★', label: 'Customer Rating' }
+              { number: '500+', label: 'Happy Customers' },
+              { number: '15+', label: 'Years Experience' },
+              { number: '100+', label: 'Tyre Models' },
+              { number: '4.5★', label: 'Justdial Rating' }
             ].map((stat, index) => (
               <motion.div 
                 key={index} 
@@ -245,8 +295,125 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Brands Section */}
+      {/* Products Showcase Section */}
       <section className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <motion.h2 
+              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              Our <span className="bg-gradient-to-r from-primary-600 via-purple-600 to-primary-800 bg-clip-text text-transparent">Products</span>
+            </motion.h2>
+            <motion.p 
+              className="text-xl text-gray-600 max-w-2xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
+              {loading ? 'Loading our products...' : `${tyres.length > 0 ? 'Premium Quality Tyres from Trusted Brands' : 'Motorcycle, Scooter & Car Tyres - Tube & Tubeless Options'}`}
+            </motion.p>
+          </motion.div>
+
+          {/* Sliding Product Cards */}
+          <div className="relative overflow-hidden mb-12">
+            {/* Left Arrow */}
+            {tyres.length > 0 && (
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300"
+              >
+                <ChevronLeft className="h-6 w-6 text-gray-700" />
+              </button>
+            )}
+
+            {/* Right Arrow */}
+            {tyres.length > 0 && (
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg hover:bg-white transition-all duration-300"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-700" />
+              </button>
+            )}
+
+            {loading ? (
+              <div className="flex justify-center items-center h-64">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600"></div>
+              </div>
+            ) : tyres.length > 0 ? (
+              <motion.div
+                animate={isPlaying ? { x: [-100, -2000] } : { x: -currentIndex * 280 }}
+                transition={{
+                  duration: isPlaying ? 20 : 0.5,
+                  repeat: isPlaying ? Infinity : 0,
+                  repeatType: "reverse",
+                  ease: "linear"
+                }}
+                className="flex space-x-6"
+                onTouchStart={handleTouch}
+                onMouseDown={handleTouch}
+              >
+                {tyres.map((tyre, index) => (
+                  <motion.div
+                    key={tyre._id}
+                    className="flex-shrink-0 w-64 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <div className="h-40 bg-gray-100 flex items-center justify-center">
+                      <img 
+                        src={tyre.image || '/tyre1.png'} 
+                        alt={tyre.name}
+                        className="h-32 w-32 object-contain"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <div className="text-sm text-primary-600 font-medium mb-2">{tyre.brand}</div>
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">{tyre.name}</h3>
+                      <div className="text-2xl font-bold text-primary-600">₹{tyre.price.toLocaleString()}</div>
+                      {tyre.size && <div className="text-sm text-gray-500 mt-1">{tyre.size}</div>}
+                      <div className="text-xs text-gray-400 mt-2">Stock: {tyre.stock}</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500">No tyres available at the moment.</p>
+              </div>
+            )}
+          </div>
+
+          {/* Explore Products Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link 
+                to="/prices" 
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-600 to-purple-600 text-white font-semibold py-4 px-8 rounded-2xl hover:from-primary-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+              >
+                <span>Explore All Products</span>
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </motion.div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Brands Section */}
+      <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
         {/* Background decoration */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-10 left-10 w-32 h-32 bg-primary-500 rounded-full blur-3xl"></div>
@@ -266,7 +433,7 @@ const Home: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Premium <span className="bg-gradient-to-r from-primary-600 via-purple-600 to-primary-800 bg-clip-text text-transparent">Brands</span>
+              Trusted <span className="bg-gradient-to-r from-primary-600 via-purple-600 to-primary-800 bg-clip-text text-transparent">Brands</span>
             </motion.h2>
             <motion.p 
               className="text-xl text-gray-600 max-w-2xl mx-auto"

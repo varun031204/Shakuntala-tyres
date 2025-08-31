@@ -61,16 +61,27 @@ const ProductForm: React.FC<ProductFormProps> = ({ tyre, onClose, onSubmit }) =>
       
       const method = tyre ? 'PUT' : 'POST';
 
+      console.log('Submitting to:', url, 'Method:', method);
+
       const response = await fetch(url, {
         method,
         body: formDataToSend
       });
 
+      console.log('Response status:', response.status);
+      
       if (response.ok) {
+        const result = await response.json();
+        console.log('Success:', result);
         onSubmit();
+      } else {
+        const error = await response.text();
+        console.error('Server error:', error);
+        alert('Error saving product. Check console for details.');
       }
     } catch (error) {
       console.error('Error saving tyre:', error);
+      alert('Network error. Check console for details.');
     } finally {
       setLoading(false);
     }
@@ -184,7 +195,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ tyre, onClose, onSubmit }) =>
             <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
               {tyre?.image && !imageFile && (
                 <img
-                  src={`http://localhost:5000${tyre.image}`}
+                  src={tyre.image}
                   alt="Current"
                   className="w-32 h-32 object-cover mx-auto mb-4 rounded"
                 />

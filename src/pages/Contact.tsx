@@ -16,13 +16,13 @@ const Contact: React.FC = () => {
     {
       icon: MapPin,
       title: 'Address',
-      details: 'Near Maharana Pratap Chowk',
-      subDetails: 'Your City, State'
+      details: 'Shop No. 1, Ranchi-Patna Road, Opposite Electric Office',
+      subDetails: 'Near Maharana Pratap Chowk, Jhanda Chowk, Jhumri Telaiya - 825409'
     },
     {
       icon: Phone,
       title: 'Phone',
-      details: '+91 98765 43210',
+      details: '+91 8298946081',
       subDetails: 'Call us anytime'
     },
     {
@@ -34,8 +34,8 @@ const Contact: React.FC = () => {
     {
       icon: Clock,
       title: 'Hours',
-      details: 'Mon - Sat: 9:00 AM - 8:00 PM',
-      subDetails: 'Sunday: 10:00 AM - 6:00 PM'
+      details: '9:00 AM - 8:00 PM',
+      subDetails: 'All Days (Including Sundays)'
     }
   ];
 
@@ -244,21 +244,48 @@ const Contact: React.FC = () => {
               viewport={{ once: true }}
               className="space-y-8"
             >
-              {/* Map Placeholder */}
+              {/* Interactive Map */}
               <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="bg-gradient-to-br from-primary-500 to-primary-700 h-64 flex items-center justify-center">
-                  <div className="text-center text-white">
-                    <MapPin className="h-12 w-12 mx-auto mb-4" />
-                    <h3 className="text-xl font-bold mb-2">Find Us Here</h3>
-                    <p className="text-primary-100">Near Maharana Pratap Chowk</p>
+                <div className="relative h-64">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d454.0416442362007!2d85.5395936!3d24.4392241!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39f374c0a05366f7%3A0xc681f993745b4d0b!2sSHAKUNTALA%20TYRES!5e0!3m2!1sen!2sin!4v1756635991965!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Shakuntala Tyres Location"
+                    className="rounded-t-2xl"
+                  ></iframe>
+                  <div className="absolute top-4 right-4">
+                    <a 
+                      href="https://maps.app.goo.gl/TKTujfE4vxTPKB3e9" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="bg-white/90 backdrop-blur-sm px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-white transition-all duration-300 shadow-lg"
+                    >
+                      Open in Maps
+                    </a>
                   </div>
                 </div>
                 <div className="p-6">
-                  <h4 className="font-bold text-gray-900 mb-2">Directions</h4>
-                  <p className="text-gray-600 text-sm">
-                    We're conveniently located near the main chowk, easily accessible 
-                    by car or public transport. Look for our bright red signboard!
+                  <h4 className="font-bold text-gray-900 mb-2">Our Location</h4>
+                  <p className="text-gray-600 text-sm mb-3">
+                    Opposite Electric Office, Near Maharana Pratap Chowk, Jhumri Telaiya, Jharkhand
                   </p>
+                  <div className="flex items-center justify-between">
+                    <a 
+                      href="https://maps.app.goo.gl/TKTujfE4vxTPKB3e9" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center space-x-2 text-primary-600 hover:text-primary-700 font-medium text-sm transition-colors"
+                    >
+                      <MapPin className="h-4 w-4" />
+                      <span>Get Directions</span>
+                    </a>
+                    <span className="text-xs text-gray-500">Click map to interact</span>
+                  </div>
                 </div>
               </div>
 
@@ -269,16 +296,16 @@ const Contact: React.FC = () => {
                 </h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Monday - Friday</span>
+                    <span className="text-gray-600">All Days</span>
                     <span className="font-medium text-gray-900">9:00 AM - 8:00 PM</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Saturday</span>
-                    <span className="font-medium text-gray-900">9:00 AM - 8:00 PM</span>
+                    <span className="text-gray-600">Including Sundays</span>
+                    <span className="font-medium text-gray-900">Open Daily</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Sunday</span>
-                    <span className="font-medium text-gray-900">10:00 AM - 6:00 PM</span>
+                    <span className="text-gray-600">Emergency Service</span>
+                    <span className="font-medium text-gray-900">Available on Call</span>
                   </div>
                 </div>
               </div>
@@ -287,12 +314,12 @@ const Contact: React.FC = () => {
               <div className="bg-gradient-to-r from-primary-600 to-primary-800 rounded-2xl p-6 text-white">
                 <h3 className="text-xl font-bold mb-4">Emergency Service</h3>
                 <p className="text-primary-100 mb-4">
-                  Need urgent tyre assistance? We provide emergency services 
-                  for roadside breakdowns and urgent replacements.
+                  24/7 emergency tyre service available. We provide roadside assistance, 
+                  puncture repair, and urgent tyre replacements across Jhumri Telaiya.
                 </p>
                 <div className="flex items-center space-x-2">
                   <Phone className="h-5 w-5" />
-                  <span className="font-bold">+91 98765 43210</span>
+                  <span className="font-bold">+91 8298946081</span>
                 </div>
               </div>
             </motion.div>
