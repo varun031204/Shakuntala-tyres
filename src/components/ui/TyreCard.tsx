@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShoppingCart, Package, AlertCircle, Phone } from 'lucide-react';
+import { ShoppingCart, Package, AlertCircle } from 'lucide-react';
 import { Tyre } from '../../types';
 
 interface TyreCardProps {
