@@ -51,7 +51,8 @@ const Prices: React.FC = () => {
 
   const fetchTyres = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL || 'http://localhost:5000/api'}/tyres`);
+      const API_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'https://shakuntala-tyres-backend.onrender.com/api' : 'http://localhost:5000/api');
+      const response = await fetch(`${API_URL}/tyres`);
       const data = await response.json();
       setTyres(data);
     } catch (error) {
