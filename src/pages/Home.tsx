@@ -14,10 +14,13 @@ const Home: React.FC = () => {
   useEffect(() => {
     const fetchTyres = async () => {
       try {
+        console.log('Fetching tyres for home page...');
         const data = await tyreAPI.getAllTyres();
+        console.log('Home page tyres fetched:', data);
         setTyres(data.slice(0, 8)); // Show first 8 tyres
       } catch (error) {
         console.error('Failed to fetch tyres:', error);
+        setTyres([]);
       } finally {
         setLoading(false);
       }

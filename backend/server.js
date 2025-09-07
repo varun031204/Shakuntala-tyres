@@ -12,6 +12,7 @@ const corsOptions = {
     'https://shakuntalatyres.shop',
     'https://www.shakuntalatyres.shop', 
     'https://admin.shakuntalatyres.shop',
+    'https://shakuntala-tyres-react.vercel.app',
     'https://shakuntala-tyres-react-mqm8tc5vy-varuns-projects-7a8c6b22.vercel.app',
     /.*\.vercel\.app$/,
     'http://localhost:3000' // For development

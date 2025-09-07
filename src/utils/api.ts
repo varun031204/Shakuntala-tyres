@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Tyre } from '../types';
-
-const API_BASE_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'https://shakuntala-tyres-backend.onrender.com/api' : 'http://localhost:5000/api');
+import { API_BASE_URL } from './config';
 
 const api = axios.create({
   baseURL: API_BASE_URL,

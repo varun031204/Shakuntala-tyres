@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Eye, EyeOff, LogOut } from 'lucide-react';
 import ProductForm from '../components/ProductForm';
+import { API_BASE_URL } from '../../utils/config';
 
 interface Tyre {
   _id: string;
@@ -31,7 +32,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
 
   const fetchTyres = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/tyres');
+      const response = await fetch(`${API_BASE_URL}/tyres`);
       const data = await response.json();
       setTyres(data);
     } catch (error) {
@@ -45,7 +46,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
     if (!window.confirm('Are you sure you want to delete this tyre?')) return;
     
     try {
-      await fetch(`http://localhost:5000/api/tyres/${id}`, { method: 'DELETE' });
+      await fetch(`${API_BASE_URL}/tyres/${id}`, { method: 'DELETE' });
       setTyres(tyres.filter(tyre => tyre._id !== id));
     } catch (error) {
       console.error('Error deleting tyre:', error);
@@ -54,7 +55,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onLogout }) => {
 
   const handleStatusToggle = async (tyre: Tyre) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/tyres/${tyre._id}`, {
+      const response = await fetch(`${API_BASE_URL}/tyres/${tyre._id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...tyre, status: tyre.status === 'active' ? 'inactive' : 'active' })

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, Upload, Save } from 'lucide-react';
+import { API_BASE_URL } from '../../utils/config';
 
 interface Tyre {
   _id?: string;
@@ -56,8 +57,8 @@ const ProductForm: React.FC<ProductFormProps> = ({ tyre, onClose, onSubmit }) =>
       }
 
       const url = tyre 
-        ? `http://localhost:5000/api/tyres/${tyre._id}`
-        : 'http://localhost:5000/api/tyres';
+        ? `${API_BASE_URL}/tyres/${tyre._id}`
+        : `${API_BASE_URL}/tyres`;
       
       const method = tyre ? 'PUT' : 'POST';
 

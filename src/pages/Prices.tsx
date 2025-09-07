@@ -52,41 +52,19 @@ const Prices: React.FC = () => {
   const fetchTyres = async () => {
     try {
       const API_URL = process.env.REACT_APP_API_URL || (process.env.NODE_ENV === 'production' ? 'https://shakuntala-tyres-backend.onrender.com/api' : 'http://localhost:5000/api');
+      console.log('Fetching tyres from:', `${API_URL}/tyres`);
       const response = await fetch(`${API_URL}/tyres`);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
-      setTyres(data);
+      console.log('Fetched tyres:', data);
+      setTyres(data || []);
     } catch (error) {
       console.error('Error fetching tyres:', error);
-      // Fallback data for demo
-      setTyres([
-        {
-          _id: '1',
-          name: 'Apollo Amazer 4G Life',
-          brand: 'Apollo',
-          price: 4500,
-          stock: 15,
-          size: '185/65 R15',
-          description: 'Premium tyre with excellent grip and durability'
-        },
-        {
-          _id: '2',
-          name: 'MRF ZLX',
-          brand: 'MRF',
-          price: 5200,
-          stock: 8,
-          size: '195/60 R16',
-          description: 'High-performance tyre for superior handling'
-        },
-        {
-          _id: '3',
-          name: 'CEAT SecuraDrive',
-          brand: 'CEAT',
-          price: 3800,
-          stock: 0,
-          size: '175/70 R14',
-          description: 'Reliable and fuel-efficient tyre option'
-        }
-      ]);
+      setTyres([]);
     } finally {
       setLoading(false);
     }
